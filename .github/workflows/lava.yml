@@ -2,7 +2,7 @@ name: Run LAVA tests
 
 on:
   push:
-    branches: [ "main", "wip/detlev/t44031-add-ci-cazou" ]
+    branches: [ "main", "wip/detlev/t44031-add-ci-debug" ]
   pull_request:
     branches: [ "main" ]
 
@@ -10,28 +10,8 @@ env:
   CARGO_TERM_COLOR: always
 
 jobs:
-  build:
-
-    runs-on: ubuntu-20.04
-
-    steps:
-    - uses: awalsh128/cache-apt-pkgs-action@latest
-      with:
-        packages: libva-dev
-        version: 1.0
-    - uses: actions/checkout@v3
-    - name: Build
-      run: cargo build --all-features --examples --release
-    - name: Upload built binary artifact
-      uses: actions/upload-artifact@v3
-      with:
-        name: ccdec-bin
-        path: target/release/examples/ccdec
-    # TODO: Upload ccdec to a public server
-
   submit-job:
 
-    needs: build
     runs-on: ubuntu-latest
     # TODO: Limit to the correct permission
     permissions:
@@ -39,20 +19,12 @@ jobs:
       checks: write
 
     steps:
-    - name: Install lavacli
-      run: sudo apt-get install lavacli
-    - name: Add lava identity
-      run: lavacli identities add --token ${{ secrets.LAVA_TOKEN }} --uri https://staging.lava.collabora.dev/RPC2 --username detlev ci
     - uses: actions/checkout@v3
       with:
         repository: 'cazou/cros-codecs-tests'
-    - name: Submit job
-      run: lavacli -i ci jobs submit template.yaml | tee lava-jobid.txt
-    - name: Log job
-      run: lavacli -i ci jobs logs $(cat lava-jobid.txt)
     - name: Retrieve test results
       # lavacli doesn't support retrieving results in the JUnit format. Use the REST API
-      run: "curl -H \"Authorization: Token ${{ secrets.LAVA_TOKEN }}\" https://staging.lava.collabora.dev/api/v0.2/jobs/$(cat lava-jobid.txt)/junit/ > results-junit.xml"
+      run: "curl -H \"Authorization: Token ${{ secrets.LAVA_TOKEN }}\" https://staging.lava.collabora.dev/api/v0.2/jobs/515839/junit/ > results-junit.xml"
     - name: Test results
       uses: cazou/test-reporter@fix-split-on-undefined
       with:
