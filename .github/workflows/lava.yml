@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     # TODO: Limit to the correct permission
     permissions:
-      actions: write
+      #actions: write
       checks: write
 
     steps:
