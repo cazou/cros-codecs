@@ -34,7 +34,9 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     # TODO: Limit to the correct permission
-    permissions: write-all
+    permissions:
+      actions: write
+      checks: write
 
     steps:
     - name: Install lavacli
