@@ -29,12 +29,14 @@ jobs:
         path: target/release/examples/ccdec
     # TODO: Upload ccdec to a public server
 
-  submit-job:
+  submit-job-intel:
 
     needs: build
     runs-on: ubuntu-latest
     permissions:
       checks: write
+    env:
+      ARCH: intel
 
     steps:
     - name: Install lavacli
@@ -43,9 +45,11 @@ jobs:
       run: lavacli identities add --token ${{ secrets.LAVA_TOKEN }} --uri https://staging.lava.collabora.dev/RPC2 --username detlev ci
     - uses: actions/checkout@v3
       with:
-        repository: 'cazou/cros-codecs-tests'
+        repository: 'cazou/cros-codecs'
+    - name: Create job description
+      run: ./ci/lava_job_generate.py --template ci/template.yaml --arch $ARCH --ccdec-build-id "${{ github.run_id }}" --test-repo "${{ github.server_url }}/${{ github.repository }}" --test-branch "${GITHUB_REF##*/}" | tee job.yaml
     - name: Submit job
-      run: lavacli -i ci jobs submit template.yaml | tee lava-jobid.txt
+      run: lavacli -i ci jobs submit job.yaml | tee lava-jobid.txt
     - name: Log job
       run: lavacli -i ci jobs logs $(cat lava-jobid.txt)
     - name: Retrieve test results
@@ -54,7 +58,41 @@ jobs:
     - name: Test results
       uses: cazou/test-reporter@fix-split-on-undefined
       with:
-        name: Cros-codecs tests
+        name: Cros-codecs tests results for Intel
+        path: '*.xml'
+        reporter: java-junit
+        fail-on-error: true
+
+  submit-job-amd:
+
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      checks: write
+    env:
+      ARCH: amd
+
+    steps:
+    - name: Install lavacli
+      run: sudo apt-get install lavacli
+    - name: Add lava identity
+      run: lavacli identities add --token ${{ secrets.LAVA_TOKEN }} --uri https://staging.lava.collabora.dev/RPC2 --username detlev ci
+    - uses: actions/checkout@v3
+      with:
+        repository: 'cazou/cros-codecs'
+    - name: Create job description
+      run: ./ci/lava_job_generate.py --template ci/template.yaml --arch $ARCH --ccdec-build-id "${{ github.run_id }}" --test-repo "${{ github.server_url }}/${{ github.repository }}" --test-branch "${GITHUB_REF##*/}" | tee job.yaml
+    - name: Submit job
+      run: lavacli -i ci jobs submit job.yaml | tee lava-jobid.txt
+    - name: Log job
+      run: lavacli -i ci jobs logs $(cat lava-jobid.txt)
+    - name: Retrieve test results
+      # lavacli doesn't support retrieving results in the JUnit format. Use the REST API
+      run: "curl -H \"Authorization: Token ${{ secrets.LAVA_TOKEN }}\" https://staging.lava.collabora.dev/api/v0.2/jobs/$(cat lava-jobid.txt)/junit/ > results-junit.xml"
+    - name: Test results
+      uses: cazou/test-reporter@fix-split-on-undefined
+      with:
+        name: Cros-codecs tests results for AMD
         path: '*.xml'
         reporter: java-junit
         fail-on-error: true

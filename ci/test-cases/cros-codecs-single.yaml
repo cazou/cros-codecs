@@ -1,0 +1,7 @@
+metadata:
+  name: cros-codecs-fluster-single
+  description: "Test cros-codecs in a single thread"
+
+run:
+  steps:
+    - ci/test-cases/run_tests.sh ${ARCH} ${CCDEC_BUILD_ID} yes

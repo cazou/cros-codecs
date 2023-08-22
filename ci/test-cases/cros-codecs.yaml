@@ -1,0 +1,7 @@
+metadata:
+  name: cros-codecs-fluster
+  description: "Test cros-codecs"
+
+run:
+  steps:
+    - ci/test-cases/run_tests.sh ${ARCH} ${CCDEC_BUILD_ID}
