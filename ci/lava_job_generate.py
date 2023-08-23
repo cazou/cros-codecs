@@ -4,9 +4,12 @@ import argparse
 import jinja2
 import os
 
+# Devices to use on lava:
+# Intel uses the Acer Chromebook Vero 514
+# AMD uses the ASUS Chromebook Flip CM1(CM1400)
 DEVICE_TYPES = {
-    "intel": "hp-x360-12b-ca0500na-n4000-octopus",
-    "amd": "unknown"
+    "intel": "acer-cbv514-1h-34uz-brya",
+    "amd": "asus-CM1400CXA-dalboz"
 }
 
 def main():
