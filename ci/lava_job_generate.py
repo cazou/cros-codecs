@@ -5,10 +5,10 @@ import jinja2
 import os
 
 # Devices to use on lava:
-# Intel uses the Acer Chromebook Vero 514
-# AMD uses the ASUS Chromebook Flip CM1(CM1400)
+# Intel uses asus-cx9400-volteer (CPU: 11th Gen Intel(R) Core(TM) i7-1160G7 @ 1.20GHz)
+# AMD uses the ASUS Chromebook Flip CM1(CM1400) (CPU: AMD 3015Ce with Radeon Graphics)
 DEVICE_TYPES = {
-    "intel": "acer-cbv514-1h-34uz-brya",
+    "intel": "asus-cx9400-volteer",
     "amd": "asus-CM1400CXA-dalboz"
 }
 

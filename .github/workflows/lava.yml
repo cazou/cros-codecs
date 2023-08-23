@@ -42,7 +42,7 @@ jobs:
     - name: Install lavacli
       run: sudo apt-get install lavacli
     - name: Add lava identity
-      run: lavacli identities add --token ${{ secrets.LAVA_TOKEN }} --uri https://staging.lava.collabora.dev/RPC2 --username detlev ci
+      run: lavacli identities add --token ${{ secrets.LAVA_TOKEN }} --uri https://lava.collabora.dev/RPC2 --username detlev ci
     - uses: actions/checkout@v3
       with:
         repository: 'cazou/cros-codecs'
@@ -54,7 +54,7 @@ jobs:
       run: lavacli -i ci jobs logs $(cat lava-jobid.txt)
     - name: Retrieve test results
       # lavacli doesn't support retrieving results in the JUnit format. Use the REST API
-      run: "curl -H \"Authorization: Token ${{ secrets.LAVA_TOKEN }}\" https://staging.lava.collabora.dev/api/v0.2/jobs/$(cat lava-jobid.txt)/junit/ > results-junit.xml"
+      run: "curl -H \"Authorization: Token ${{ secrets.LAVA_TOKEN }}\" https://lava.collabora.dev/api/v0.2/jobs/$(cat lava-jobid.txt)/junit/ > results-junit.xml"
     - name: Test results
       uses: cazou/test-reporter@fix-split-on-undefined
       with:
@@ -76,7 +76,7 @@ jobs:
     - name: Install lavacli
       run: sudo apt-get install lavacli
     - name: Add lava identity
-      run: lavacli identities add --token ${{ secrets.LAVA_TOKEN }} --uri https://staging.lava.collabora.dev/RPC2 --username detlev ci
+      run: lavacli identities add --token ${{ secrets.LAVA_TOKEN }} --uri https://lava.collabora.dev/RPC2 --username detlev ci
     - uses: actions/checkout@v3
       with:
         repository: 'cazou/cros-codecs'
@@ -88,7 +88,7 @@ jobs:
       run: lavacli -i ci jobs logs $(cat lava-jobid.txt)
     - name: Retrieve test results
       # lavacli doesn't support retrieving results in the JUnit format. Use the REST API
-      run: "curl -H \"Authorization: Token ${{ secrets.LAVA_TOKEN }}\" https://staging.lava.collabora.dev/api/v0.2/jobs/$(cat lava-jobid.txt)/junit/ > results-junit.xml"
+      run: "curl -H \"Authorization: Token ${{ secrets.LAVA_TOKEN }}\" https://lava.collabora.dev/api/v0.2/jobs/$(cat lava-jobid.txt)/junit/ > results-junit.xml"
     - name: Test results
       uses: cazou/test-reporter@fix-split-on-undefined
       with:
