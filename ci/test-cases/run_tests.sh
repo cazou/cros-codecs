@@ -35,6 +35,11 @@ SKIP_VECTORS_intel_vp9_test_vectors="vp90-2-22-svc_1280x720_3.ivf vp91-2-04-yuv4
 SKIP_VECTORS_intel_jvt_avc_v1="CVFC1_Sony_C FM1_BT_B FM1_FT_E FM2_SVA_C MR5_TANDBERG_C MR8_BT_B MR9_BT_B SP1_BT_A sp2_bt_b"
 SKIP_VECTORS_intel_jct_vc_hevc_v1="CONFWIN_A_Sony_1 PICSIZE_A_Bossen_1 PICSIZE_B_Bossen_1 RAP_B_Bossen_2 RPS_C_ericsson_5 RPS_E_qualcomm_5 TSUNEQBD_A_MAIN10_Technicolor_2"
 
+if [ $ARCH == "amd" ]; then
+	echo "<LAVA_SIGNAL_TESTCASE TEST_CASE_ID=amd RESULT=fail>"
+	exit 0
+fi
+
 CCDEC_URL="https://somewhere.google.com/cros-codecs/build/${CCDEC_BUILD_ID}/ccdec"
 OLD_CCDEC_URL="https://people.collabora.com/~detlev/cros-codecs-tests/ccdec"
 
