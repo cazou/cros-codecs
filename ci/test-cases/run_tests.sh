@@ -21,7 +21,6 @@ SUPPORTED_CODECS_intel="
 "
 
 SUPPORTED_CODECS_amd="
-    vp9 \
     h.264 \
     h.265 \
 "
@@ -135,9 +134,15 @@ if [ "${SINGLE_RUN}" == "yes" ]; then
 	FLUSTER_ARGS="-j 1"
 fi
 
-RUST_BACKTRACE=full ccdec /opt/fluster/resources/VP9-TEST-VECTORS/vp90-2-14-resize-10frames-fp-tiles-8-1.webm/vp90-2-14-resize-10frames-fp-tiles-8-1.webm --output /dev/null --input-format vp9 --output-format i420
+#LIBVA_TRACE=libva RUST_BACKTRACE=full ccdec /opt/fluster/resources/VP9-TEST-VECTORS/vp90-2-14-resize-10frames-fp-tiles-8-1.webm/vp90-2-14-resize-10frames-fp-tiles-8-1.webm --output /dev/null --input-format vp9 --output-format i420
+#cat libva*
+#rm libva*
 
-exit 0
+#LIBVA_TRACE=libva RUST_BACKTRACE=full ccdec /opt/fluster/resources/JVT-AVC_V1/BA1_FT_C/BA1_FT_C.264 --output /dev/null --input-format h264 --output-format i420
+#cat libva*
+#rm libva*
+
+#exit 0
 
 codecs_var_name="SUPPORTED_CODECS_${ARCH}"
 eval "codecs=\$$codecs_var_name"
