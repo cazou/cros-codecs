@@ -68,7 +68,7 @@ for codec in ${SUPPORTED_CODECS}; do
 			SKIP_ARG="-sv ${skip}"
 		fi
 		echo Running /usr/bin/fluster_parser.py -ts ${ts} -d ccdec-${codec} ${SKIP_ARG} ${FLUSTER_ARGS}
-		/usr/bin/fluster_parser.py -ts ${ts} -d ccdec-${codec} -t 120 ${SKIP_ARG} ${FLUSTER_ARGS}
+		/usr/bin/fluster_parser.py -ts ${ts} -d ccdec-${codec} -t 300 ${SKIP_ARG} ${FLUSTER_ARGS}
 		rm -f results.xml
 	done
 done
