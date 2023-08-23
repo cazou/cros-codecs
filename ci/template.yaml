@@ -48,15 +48,6 @@ actions:
          branch: '{{ test_branch }}'
          history: False
          from: git
-         name: run_fluster
-         path: ci/test-cases/cros-codecs.yaml
-         params:
-           CCDEC_BUILD_ID: {{ ccdec_build_id }}
-           ARCH: {{ arch }}
-       - repository: {{ repo_url }}
-         branch: '{{ test_branch }}'
-         history: False
-         from: git
          name: run_fluster_single
          path: ci/test-cases/cros-codecs-single.yaml
          params:
