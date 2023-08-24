@@ -8,8 +8,8 @@ import os
 # Intel uses asus-cx9400-volteer (CPU: 11th Gen Intel(R) Core(TM) i7-1160G7 @ 1.20GHz)
 # AMD uses the ASUS Chromebook Flip CM1(CM1400) (CPU: AMD 3015Ce with Radeon Graphics)
 DEVICE_TYPES = {
-    "intel": "asus-cx9400-volteer",
-    "amd": "asus-CM1400CXA-dalboz"
+    "intel": "hp-x360-12b-ca0010nr-n4020-octopus",
+    "amd": "hp-11A-G6-EE-grunt"
 }
 
 def main():
