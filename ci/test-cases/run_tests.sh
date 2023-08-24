@@ -30,9 +30,9 @@ TEST_SUITES_vp9="VP9-TEST-VECTORS"
 TEST_SUITES_h264="JVT-AVC_V1"
 TEST_SUITES_h265="JCT-VC-HEVC_V1"
 
-SKIP_VECTORS_amd_vp9_test_vectors="vp90-2-03-deltaq.webm vp90-2-05-resize.ivf vp90-2-16-intra-only.webm vp90-2-18-resize.ivf vp90-2-22-svc_1280x720_3.ivf vp91-2-04-yuv422.webm vp91-2-04-yuv444.webm"
-SKIP_VECTORS_amd_jvt_avc_v1="CVFC1_Sony_C FM1_BT_B FM1_FT_E FM2_SVA_C MR3_TANDBERG_B  MR4_TANDBERG_C MR5_TANDBERG_C SP1_BT_A sp2_bt_b"
-SKIP_VECTORS_amd_jct_vc_hevc_v1="\
+#SKIP_VECTORS_amd_vp9_test_vectors="vp90-2-03-deltaq.webm vp90-2-05-resize.ivf vp90-2-16-intra-only.webm vp90-2-18-resize.ivf vp90-2-22-svc_1280x720_3.ivf vp91-2-04-yuv422.webm vp91-2-04-yuv444.webm"
+SKIP_VECTORS_amd_jvt_avc_v1_skip="CVFC1_Sony_C FM1_BT_B FM1_FT_E FM2_SVA_C MR3_TANDBERG_B  MR4_TANDBERG_C MR5_TANDBERG_C SP1_BT_A sp2_bt_b"
+SKIP_VECTORS_amd_jct_vc_hevc_v1_skip="\
 	AMP_D_Hisilicon_3 \
 	AMP_E_Hisilicon_3 \
 	CAINIT_A_SHARP_4 \
