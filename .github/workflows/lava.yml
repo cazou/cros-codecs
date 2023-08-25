@@ -2,7 +2,7 @@ name: Run LAVA tests
 
 on:
   push:
-    branches: [ "main", "wip/detlev/t44031-add-ci", "add-amd-support" ]
+    branches: [ "main", "wip/detlev/t44031-add-ci", "add-amd-support", "switch-to-python"]
   pull_request:
     branches: [ "main" ]
 
