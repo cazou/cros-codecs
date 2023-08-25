@@ -4,4 +4,5 @@ metadata:
 
 run:
   steps:
-    - ci/test-cases/run_tests.sh ${ARCH} ${CCDEC_BUILD_ID} yes
+#    - ci/test-cases/run_tests.sh ${ARCH} ${CCDEC_BUILD_ID} yes
+    - python3 ci/test-cases/run_tests.py --config-file ci/config.yaml --arch ${ARCH} --ccdec-build-id ${CCDEC_BUILD_ID} --single

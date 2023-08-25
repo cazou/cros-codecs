@@ -47,7 +47,7 @@ jobs:
       with:
         repository: 'cazou/cros-codecs'
     - name: Create job description
-      run: ./ci/lava_job_generate.py --template ci/template.yaml --arch $ARCH --ccdec-build-id "${{ github.run_id }}" --test-repo "${{ github.server_url }}/${{ github.repository }}" --test-branch "${GITHUB_REF##*/}" | tee job.yaml
+      run: ./ci/lava_job_generate.py --template ci/template.yaml --arch $ARCH --ccdec-build-id "${{ github.run_id }}" --test-repo "${{ github.server_url }}/${{ github.repository }}" --test-branch "${GITHUB_REF##*/}" --config-file ci/config.yaml | tee job.yaml
     - name: Submit job
       run: lavacli -i ci jobs submit job.yaml | tee lava-jobid.txt
     - name: Log job
@@ -81,7 +81,7 @@ jobs:
       with:
         repository: 'cazou/cros-codecs'
     - name: Create job description
-      run: ./ci/lava_job_generate.py --template ci/template.yaml --arch $ARCH --ccdec-build-id "${{ github.run_id }}" --test-repo "${{ github.server_url }}/${{ github.repository }}" --test-branch "${GITHUB_REF##*/}" | tee job.yaml
+      run: ./ci/lava_job_generate.py --template ci/template.yaml --arch $ARCH --ccdec-build-id "${{ github.run_id }}" --test-repo "${{ github.server_url }}/${{ github.repository }}" --test-branch "${GITHUB_REF##*/}" --config-file ci/config.yaml | tee job.yaml
     - name: Submit job
       run: lavacli -i ci jobs submit job.yaml | tee lava-jobid.txt
     - name: Log job
