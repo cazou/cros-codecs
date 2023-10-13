@@ -26,6 +26,7 @@ def run_fluster(codec, test_suite, skips, single_thread):
 
 def retrieve_ccdec_github(sha, branch, repo, token):
     if os.path.exists("/opt/cros-codecs/ccdec"):
+        os.environ['PATH'] = os.environ['PATH'] + ":/opt/cros-codecs"
         return True
 
     runs = requests.get(URL_RUNS.format(head_sha=sha, head_branch=branch, repo=repo), headers={"Accept": "application/vnd.github+json", "X-GitHub-Api-Version": "2022-11-28", "Authorization": f"Bearer {token}"}).json()
@@ -75,6 +76,7 @@ def retrieve_ccdec(run_id, repo, token):
     # Retrieve the artifact
     for i in range(30):
         try:
+            print('retrieve ccdec')
             if retrieve_ccdec_github(sha, branch, repo, token):
                 break
             time.sleep(10)

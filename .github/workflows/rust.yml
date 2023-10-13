@@ -2,7 +2,7 @@ name: Health check
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "main", "test-cazou3" ]
   pull_request:
     branches: [ "main" ]
 
