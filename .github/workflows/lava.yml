@@ -7,22 +7,22 @@ on:
     branches: [ "main" ]
 
 jobs:
-  submit-job-intel:
-
+  submit-job:
     runs-on: ubuntu-latest
     permissions:
       checks: write
-    env:
-      ARCH: intel
+    strategy:
+      matrix:
+        ARCH: 
+          - intel
+          - amd
 
     steps:
     - name: Install lavacli
       run: sudo apt-get install lavacli
     - name: Add lava identity
-      run: lavacli identities add --token ${{ secrets.LAVA_TOKEN }} --uri https://lava.collabora.dev/RPC2 --username ${{ vars.LAVA_USERNAME }} ci
+      run: lavacli identities add --token ${{ secrets.LAVA_TOKEN }} --uri ${{ vars.LAVA_URL }}/RPC2 --username ${{ vars.LAVA_USERNAME }} ci
     - uses: actions/checkout@v3
-      with:
-        repository: 'cazou/cros-codecs'
     - name: Create job description
       run: ./ci/lava_job_generate.py --template ci/template.yaml --arch $ARCH --ccdec-build-id "${{ github.run_id }}" --test-repo "${{ github.server_url }}/${{ github.repository }}" --test-branch "${GITHUB_REF_NAME}" --config-file ci/config.yaml --token ${{ secrets.GH_BEARER }} --repo ${GITHUB_REPOSITORY} | tee job.yaml
     - name: Submit job
@@ -31,44 +31,11 @@ jobs:
       run: lavacli -i ci jobs logs $(cat lava-jobid.txt)
     - name: Retrieve test results
       # lavacli doesn't support retrieving results in the JUnit format. Use the REST API
-      run: "curl -H \"Authorization: Token ${{ secrets.LAVA_TOKEN }}\" https://lava.collabora.dev/api/v0.2/jobs/$(cat lava-jobid.txt)/junit/ > results-junit.xml"
+      run: "curl -H \"Authorization: Token ${{ secrets.LAVA_TOKEN }}\" ${{ vars.LAVA_URL }}/api/v0.2/jobs/$(cat lava-jobid.txt)/junit/ > results-junit.xml"
     - name: Test results
       uses: dorny/test-reporter@v1.7.0
       with:
-        name: Cros-codecs tests results for Intel
-        path: '*.xml'
-        reporter: java-junit
-        fail-on-error: true
-
-  submit-job-amd:
-
-    runs-on: ubuntu-latest
-    permissions:
-      checks: write
-    env:
-      ARCH: amd
-
-    steps:
-    - name: Install lavacli
-      run: sudo apt-get install lavacli
-    - name: Add lava identity
-      run: lavacli identities add --token ${{ secrets.LAVA_TOKEN }} --uri https://lava.collabora.dev/RPC2 --username ${{ vars.LAVA_USERNAME }} ci
-    - uses: actions/checkout@v3
-      with:
-        repository: 'cazou/cros-codecs'
-    - name: Create job description
-      run: ./ci/lava_job_generate.py --template ci/template.yaml --arch $ARCH --ccdec-build-id "${{ github.run_id }}" --test-repo "${{ github.server_url }}/${{ github.repository }}" --test-branch "${GITHUB_REF_NAME}" --config-file ci/config.yaml --token ${{ secrets.GH_BEARER }} --repo ${GITHUB_REPOSITORY} | tee job.yaml
-    - name: Submit job
-      run: lavacli -i ci jobs submit job.yaml | tee lava-jobid.txt
-    - name: Log job
-      run: lavacli -i ci jobs logs $(cat lava-jobid.txt)
-    - name: Retrieve test results
-      # lavacli doesn't support retrieving results in the JUnit format. Use the REST API
-      run: "curl -H \"Authorization: Token ${{ secrets.LAVA_TOKEN }}\" https://lava.collabora.dev/api/v0.2/jobs/$(cat lava-jobid.txt)/junit/ > results-junit.xml"
-    - name: Test results
-      uses: dorny/test-reporter@v1.7.0
-      with:
-        name: Cros-codecs tests results for AMD
+        name: Cros-codecs tests results for $ARCH
         path: '*.xml'
         reporter: java-junit
         fail-on-error: true
