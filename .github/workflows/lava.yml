@@ -2,7 +2,7 @@ name: Run LAVA tests
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "test-cazou2" ]
   pull_request:
     branches: [ "main" ]
 
