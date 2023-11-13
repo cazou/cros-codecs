@@ -13,7 +13,7 @@ jobs:
       checks: write
     strategy:
       matrix:
-        ARCH: 
+        arch: 
           - intel
           - amd
 
@@ -24,7 +24,7 @@ jobs:
       run: lavacli identities add --token ${{ secrets.LAVA_TOKEN }} --uri ${{ vars.LAVA_URL }}/RPC2 --username ${{ vars.LAVA_USERNAME }} ci
     - uses: actions/checkout@v3
     - name: Create job description
-      run: ./ci/lava_job_generate.py --template ci/template.yaml --arch $ARCH --ccdec-build-id "${{ github.run_id }}" --test-repo "${{ github.server_url }}/${{ github.repository }}" --test-branch "${GITHUB_REF_NAME}" --config-file ci/config.yaml --token ${{ secrets.GH_BEARER }} --repo ${GITHUB_REPOSITORY} | tee job.yaml
+      run: ./ci/lava_job_generate.py --template ci/template.yaml --arch ${{ matrix.arch }} --ccdec-build-id "${{ github.run_id }}" --test-repo "${{ github.server_url }}/${{ github.repository }}" --test-branch "${GITHUB_REF_NAME}" --config-file ci/config.yaml --token ${{ secrets.GH_BEARER }} --repo ${GITHUB_REPOSITORY} | tee job.yaml
     - name: Submit job
       run: lavacli -i ci jobs submit job.yaml | tee lava-jobid.txt
     - name: Log job
@@ -35,7 +35,7 @@ jobs:
     - name: Test results
       uses: dorny/test-reporter@v1.7.0
       with:
-        name: Cros-codecs tests results for $ARCH
+        name: Cros-codecs tests results for ${{ matrix.arch }}
         path: '*.xml'
         reporter: java-junit
         fail-on-error: true
