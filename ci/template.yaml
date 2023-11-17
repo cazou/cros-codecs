@@ -26,11 +26,11 @@ actions:
       url: https://storage.chromeos.kernelci.org/images/kernel/cros---chromeos-6.1-x86_64-chromiumos-x86_64.flavour.config+x86-chromebook/clang-14/modules.tar.xz
     nfsrootfs:
       compression: xz
-      url: https://people.collabora.com/~detlev/cros-codecs-tests/ccdec.rootfs.tar.xz
+      url: https://storage.kernelci.org/images/rootfs/debian/bullseye-gst-fluster/20231117.0/amd64/full.rootfs.tar.xz
     os: oe
     ramdisk:
       compression: gz
-      url: https://people.collabora.com/~detlev/cros-codecs-tests/ccdec.initrd.cpio.gz
+      url: https://storage.kernelci.org/images/rootfs/debian/bullseye-gst-fluster/20231117.0/amd64/initrd.cpio.gz
     timeout:
       minutes: 15
     to: tftp
